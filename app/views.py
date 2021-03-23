@@ -5,8 +5,12 @@ Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
 
+import os
+from werkzeug.utils import secure_filename
 from app import app
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash, session, abort, send_from_directory
+from .form import addPropertyform, FormPhoto
+
 
 
 ###
@@ -23,6 +27,57 @@ def home():
 def about():
     """Render the website's about page."""
     return render_template('about.html', name="Mary Jane")
+
+@app.route('/property', methods=['POST'])
+def property():
+    form=addPropertyform()
+    if request.method == 'POST':
+         if form.validate_on_submit():
+             title=form.title.data
+             numofbedrooms= form. numofbedrooms.data
+             numofbath= form.numofbath.data 
+             location= form.location.data
+             price= form.price.data
+             housetype=form.housetype.data
+             descript=form.descript.data 
+             
+             flash('Form Completed', 'success')
+             return render_template('property.html', title=title, numofbedrooms=numofbedrooms, numofbath=numofbath, location=location, price=price, housetype=housetype, descript=descript)
+         
+         flash_errors(form)
+    return render_template('property.html', form=form)
+
+
+
+@app.route('/process-file', methods=['POST'])
+def process_file():
+    photoform= FormPhoto()
+    
+    if request.method =='POST' and photoform.validate_on_submit():
+        
+        file=request.files['file']
+        filename= secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return render_template('property.html', filename=filename)
+    
+    flash_errors(photoform)
+    return render_template('property.html', form=photoform)
+
+@app.route("/uploads/<filename>")
+def get_uploaded_file(filename):
+    root_dir = os.getcwd()
+
+    return send_from_directory(os.path.join(root_dir, app.config['UPLOAD_FOLDER']), filename)
+      
+
+
+@app.route('/properties')
+def properties():
+    return render_template('properties.html')
+
+@app.route('/property/<propertyid>')
+def propertyid():
+    return render_template('property.html')
 
 
 ###

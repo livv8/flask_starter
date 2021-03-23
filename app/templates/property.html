@@ -1,0 +1,58 @@
+
+    {% extends "base.html" %}
+       
+    {% block main%}
+
+        <h2> Add New Property</h2>
+
+        <form method="POST" action="/process-file" enctype="multipart/form-data">
+            {% include flash_messages.html %} 
+            <div class="form-gr">
+                  <label for="title"> Property Title </label>
+                  <input type="text" class="control" name="title" id="title" />
+                  request.form['title'] 
+            </div>
+           
+            <div class="form-gr">
+                  <label for="descript"> Description </label>
+                  <input type="text" class="control" name="descript" id="descript" />
+            </div>
+
+             <div class="form-gr">
+                  <label for="numofbedrooms"> No. of Rooms </label>
+                  <input type="text" class="control" name="numofbedrooms" id="numofbedrooms" />
+            </div>
+
+             <div class="form-gr">
+                  <label for="numofbath"> No. of Bathrooms </label>
+                  <input type="text" class="control" name="numofbath" id="numofbath" />
+            </div>
+
+             <div class="form-gr">
+                  <label for="price"> Price </label>
+                  <input type="text" class="control" name="price" id="price" />
+            </div>
+
+             <div class="form-gr">
+                  <label for="housetype">Property Type </label>
+                  <input type="text" class="control" name="housetype" id="housetype" />
+            </div>
+
+             <div class="form-gr">
+                  <label for="location"> Location </label>
+                  <input type="text" class="control" name="location" id="location" />
+            </div>
+
+             <div class="form-gr">
+                  <label for="photo"> Photo </label>
+                  <input type="file" name="myFile" />
+                  <button type= "Submit"> Browse </button>                  
+            </div>
+         
+            <button type= "Submit"> Add Property </button>
+        </form>
+
+</body>
+ </html>
+ {% endblock %}
+     
