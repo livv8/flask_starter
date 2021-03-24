@@ -9,7 +9,6 @@ Flask-WTF
 Flask-Migrate
 WTForms
 Django
-Werkzeug
 WTForms
 pylint
 dnspython
