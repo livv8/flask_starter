@@ -7,5 +7,12 @@ MarkupSafe==1.1.1
 Werkzeug==1.0.1
 Flask-WTF
 Flask-Migrate
-WTForms==2.1
+WTForms
 Django
+Werkzeug
+WTForms
+pylint
+dnspython
+Flask-Script
+Flask-SQLAlchemy
+psycopg2

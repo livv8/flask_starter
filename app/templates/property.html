@@ -1,6 +1,10 @@
 
     {% extends "base.html" %}
-       
+        
+        {% block css %}
+      <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+      {% endblock %}
+
     {% block main%}
 
         <h2> Add New Property</h2>

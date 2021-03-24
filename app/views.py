@@ -42,6 +42,7 @@ def property():
              descript=form.descript.data 
              
              flash('Form Completed', 'success')
+             return redirect("/properties")
              return render_template('property.html', title=title, numofbedrooms=numofbedrooms, numofbath=numofbath, location=location, price=price, housetype=housetype, descript=descript)
          
          flash_errors(form)
@@ -49,12 +50,20 @@ def property():
 
 
 
-@app.route('/process-file', methods=['POST'])
+@app.route('/process-file', methods=['POST', 'GET'])
 def process_file():
     photoform= FormPhoto()
     
     if request.method =='POST' and photoform.validate_on_submit():
-        
+        db = connect_db()
+            cur = db.cursor()
+            cur.execute('insert into property (name, email)
+            values (%s, %s)', (request.form['name'],
+            request.form['email']))
+            db.commit()
+            flash('New user was successfully added')
+            return redirect(url_for('property'))
+            return render_template('properties.html')
         file=request.files['file']
         filename= secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
